@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :set_db, :set_descriptions
-  http_basic_authenticate_with name: "balua", password: "k3r@k2019"
+  http_basic_authenticate_with name: "balua", password: "k3r@k2019" if Rails.env.production?
 
   private
   def set_db
