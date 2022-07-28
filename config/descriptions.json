@@ -2333,15 +2333,23 @@
         },
         {
             "key": "cu_or_bt",
-            "label": "CU/BT",
-            "type": "checkbox",
-            "value_type": "boolean"
+            "label": "Clean-up or Balk Trim?",
+            "type": "picker",
+            "value_type": "string",
+            "values": [
+                "",
+                "CU",
+                "BT"
+            ]
         },
         {
             "key": "designation",
             "label": "Designation",
-            "type": "text_field",
-            "value_type": "string"
+            "type": "picker",
+            "value_type": "string",
+            "values": {
+                "from": "designation"
+            }
         },
         {
             "key": "certainty",
@@ -2485,7 +2493,7 @@
             "value_type": "string"
         },
         {
-            "key": "condition",
+            "key": "registars_condition",
             "label": "Condition",
             "type": "picker",
             "value_type": "string",

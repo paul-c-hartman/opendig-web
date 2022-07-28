@@ -1,9 +1,9 @@
 class Registrar
 
-  attr_accessor :locus, :pail_number, :field_number, :type, :remarks, :id, :state
+  attr_accessor :locus, :pail_number, :field_number, :registration_number, :type, :remarks, :id, :state
 
   def initialize(row_values)
-    @locus, @pail_number, @field_number, @type, @remarks, @state, @id = row_values
+    @locus, @pail_number, @field_number, @registration_number, @type, @remarks, @state, @id = row_values
     @state = 'unregistered' if @state.nil?
   end
 

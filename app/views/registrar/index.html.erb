@@ -33,10 +33,13 @@
 </div>
 
 <div class="row">
-  <div class="col-5">
+  <div class="col-4">
     <h2>Information</h2>
   </div>
   <div class="col-2">
+    <h2>Reg Number</h2>
+  </div>
+  <div class="col-1">
     <h2>Type</h2>
   </div>
   <div class="col-5">
@@ -46,10 +49,13 @@
 
 <% @finds.each do |find| %>
 <div class="row">
-  <div class="col-5">
+  <div class="col-4">
     <%= link_to "Locus: #{find.locus}, Pail: #{find.pail_number}, Field number: #{find.field_number}", registrar_path(id: find.id, pail_id: find.pail_number, item_type: find.type, item_number: find.field_number, item_locus_code: find.locus) %>
   </div>
   <div class="col-2">
+      <%= find.registration_number %>
+  </div>
+  <div class="col-1">
       <%= find.type %>
   </div>
   <div class="col-5">
