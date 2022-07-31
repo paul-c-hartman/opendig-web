@@ -22,7 +22,7 @@ class Find
 
   def self.get_presigned_url(registration_number)
     unless Find.can_have_image?(registration_number)
-      url = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+      url = 'https://via.placeholder.com/250x250.png?text=No+Image'
     else
       bucket = Rails.application.config.s3_bucket
       object_key = "#{registration_number}.jpg"
@@ -31,11 +31,11 @@ class Find
           url = bucket.object(object_key).presigned_url(:get)
         rescue Aws::Errors::ServiceError => e
           Rails.logger.error "Couldn't create presigned URL for #{bucket.name}:#{object_key}. Here's why: #{e.message}"
-          url = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+          url = 'https://via.placeholder.com/250x250.png?text=No+Image'
 
         end
       else
-        url = 'https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg'
+        url = 'https://via.placeholder.com/250x250.png?text=No+Image'
       end
     end
 
