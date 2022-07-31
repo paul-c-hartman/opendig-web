@@ -9,8 +9,8 @@ class CsvData
     csv_data = File.read("data/#{csv_file}.csv")
     raw_data = CSV.parse(csv_data).map {|a| Hash[ keys.zip(a) ] }
     raw_data.map do |row|
-      area = row['square'].split('.').first
-      square = row['square'].split('.').last
+      area = row['square']&.split('.')&.first
+      square = row['square']&.split('.')&.last
       row['area'] = area
       row['square'] = square
       row['season'] = 2022

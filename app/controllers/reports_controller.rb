@@ -19,6 +19,7 @@ class ReportsController < ApplicationController
       end
       @rows = CsvData.new(@report_type).rows
       # @rows = @db.view('opendig/report', {reduce: false, start_key: [@season, report_type_param], end_key:[@season, report_type_param, {}] })["rows"]
+      @rows.sort_by!{ |row| row.dig('registration_number').to_s }
     elsif %w( Z ).include? report_type_param
       @report_type = "bones"
       # @rows = @db.view('opendig/bone_report', {reduce: false, start_key: [@season], end_key:[@season, {}] })["rows"]
@@ -34,7 +35,6 @@ class ReportsController < ApplicationController
       @rows.sort_by!{|row| [row.dig('area'), row.dig('square'), row.dig('locus'), row.dig('pail')]}
     end
 
-    @rows.sort_by!{ |row| row.dig('registration_number').to_s }
 
     field_set_selector = @descriptions['reports'][@report_type]['field_set']
     @report_type_title = @descriptions['reports'][@report_type]['title']
