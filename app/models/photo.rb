@@ -30,8 +30,8 @@ class Photo
         )
         builder.url_for("s3://#{Rails.application.config.s3_bucket.name}/daily_photos/#{number}.jpg")
       else
-        height = _style['height'] || 1000
-        width = _style['width'] || 1000
+        height = _style[:height] || 1000
+        width = _style[:width] || 1000
         "https://placehold.jp/#{height}x#{width}.jpg?text=No+Image"
       end
     end
