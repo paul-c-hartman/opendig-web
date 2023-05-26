@@ -54,3 +54,5 @@ grafana-data/
 .terraform/
 
 .envrc
+/app/assets/builds/*
+!/app/assets/builds/.keep

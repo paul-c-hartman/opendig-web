@@ -6,7 +6,7 @@ services:
     stdin_open: true
     tty: true
     environment:
-      RAILS_ENV: test
+      RAILS_ENV: development
       EDITING_ENABLED: false
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}

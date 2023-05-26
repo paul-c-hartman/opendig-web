@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 
 export RAILS_ENV=production
-bin/rails assets:precompile
-bin/rails server -b 0.0.0.0
+bundle exec bin/rails assets:precompile
+bundle exec bin/rails server -b 0.0.0.0
