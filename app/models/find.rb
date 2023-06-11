@@ -43,7 +43,6 @@ class Find
 
     if Find.can_have_image?(registration_number)
       Rails.cache.fetch("#{registration_number}_presigned_urls", expires_in: 5.minutes) do
-        Rails.cache.fetch("finds/photo_url_#{registration_number}_#", expires_in: 5.minutes) do
         keys = get_image_keys(registration_number)
         urls = keys.map do |key|
           bucket.object(key).presigned_url(:get)
