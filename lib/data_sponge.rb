@@ -65,6 +65,7 @@ module DataSponge
     def hash_to_merge
       {
         registration_number: registration_number,
+        field_number: field_number,
         designation: designation,
         certainty: certainty,
         period: period,
@@ -119,6 +120,48 @@ module DataSponge
     end
   end
 
+  def self.update_data_for(file)
+    puts "Processing #{file}..."
+    File.open("data/#{file}.csv").each do |l|
+      line = l.chomp.split(',',-1)
+      find = DataLine.new(*line[0..31])
+      unless find.locus && find.field_number && find.pail_number
+        next
+      end
+      if item = @items.select{|item| item.formatted_locus_code == find.locus}
+                      &.select{|item| item.field_number.to_i == find.field_number.to_i}
+                      &.select{|item| item.pail_number.to_i == find.pail_number.to_i}.first
+        doc = @db.get(item.id)
+        pails = doc['pails']
+        pail = pails.find{|pail| pail['pail_number'].to_i == find.pail_number.to_i}
+        finds = pail['finds']
+        _find = finds.find{|f| f['field_number'].to_i == find.field_number.to_i}
+        _find.merge!(find.hash_to_merge)
+        if doc.save
+          puts "Saved!"
+        else
+          puts "Failed to save"
+        end
+      else
+        puts "#{find.registration_number}: No match for Locus #{find.locus}, field number #{find.field_number} in pail #{find.pail_number}, creating new record for find"
+        if locus = @db.view('opendig/locus', key: [find.area, find.square, find.locus_code])["rows"]&.first&.dig("value")
+          doc = @db.get(locus['_id'])
+          pails = doc['pails']
+          pail = pails.find{|pail| pail['pail_number'].to_i == find.pail_number.to_i}
+          pail['finds'] << find.hash_to_merge
+          if doc.save
+            puts "Saved!"
+          else
+            puts "Failed to save"
+          end
+        else
+          puts "No match for Locus #{find.locus}"
+        end
+      end
+      Find.clear_cache_keys(find.registration_number)
+    end
+  end
+
   def self.sponge(files = nil)
     @db = Rails.application.config.couchdb
     @items = Registrar.all_by_season(2022)
@@ -131,6 +174,16 @@ module DataSponge
         file.puts "Registration Number, Locus, Pail, Field Number"
         missing.each{|find| file.puts find}
       end
+    end
+  end
+
+  def self.update_data(files = nil)
+    @db = Rails.application.config.couchdb
+    @items = Registrar.all_by_season(2022)
+    files ||= %w( objects samples artifacts )
+    files = Array(files)
+    files.each do |item|
+      update_data_for(item)
     end
   end
 
