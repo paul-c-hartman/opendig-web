@@ -146,7 +146,7 @@ docker compose exec app bundle exec rails db:migrate
 ### Running tests
 
 ```bash
-docker compose exec app bundle exec rspec
+bin/spec
 ```
 
 ## Project Structure
