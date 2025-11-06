@@ -11,7 +11,7 @@ class AreasController < ApplicationController
     @areas = @db.view('opendig/areas', {group: true})['rows'].map{|area| area["key"]}
     new_area = params[:area].upcase
     unless @areas.include? new_area
-      doc = {"temp-doc" => true}.merge({"area" => new_area})
+      doc = {"area": new_area, "temp-doc": true}
       if @db.save_doc(doc)
         flash[:success] = "area #{new_area} created!"
         redirect_to areas_path
