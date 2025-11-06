@@ -15,7 +15,7 @@ Aws.config.update(
 
 s3 = Aws::S3::Resource.new
 
-bucket_name = ENV['S3_BUCKET_NAME'] || "opendig_#{Rails.env}"
+bucket_name = "opendig-#{Rails.env}"
 Rails.application.config.s3_bucket = s3.bucket(bucket_name)
 
 Imgproxy.configure do |config|
