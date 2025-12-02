@@ -224,6 +224,12 @@ docker compose up -d
 
 **Warning**: This will delete all data in CouchDB. The `docker compose down -v` command will also delete MinIO data.
 
+### Folder permissions issues
+
+If you see permission denied errors in the logs, you may need to setup and run the app in a fresh environment, such as a VM.
+
+At this time, Ubuntu and WSL2 should not have this issue.
+
 ## Additional Resources
 
 - Rails documentation: https://guides.rubyonrails.org/
