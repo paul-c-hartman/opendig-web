@@ -26,7 +26,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4.5.0
         with:
-          images: neshmi/opendig-web
+          images: opendig/opendig-web
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v4.1.0
